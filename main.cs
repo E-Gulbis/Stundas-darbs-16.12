@@ -8,13 +8,11 @@ namespace PCComponentManager{
         public string Modelis { get; set; }
         public decimal Cena { get; set; }
 
-        public override string ToString()
-        {
+        public override string ToString(){
             return $"{Veids} - {Modelis} ({Cena:0.00} EUR)";
         }
 
-        public string ToFileFormat()
-        {
+        public string ToFileFormat(){
             return "-Personālā datora sastāvdaļa-\n" +
                    $"Veids: {Veids}\n" +
                    $"Modelis: {Modelis}\n" +
@@ -22,8 +20,7 @@ namespace PCComponentManager{
         }
     }
 
-    static class Program
-    {
+    static class Program{
         [STAThread]
         static void Main()
         {
@@ -33,8 +30,7 @@ namespace PCComponentManager{
         }
     }
 
-    public class MainForm : Form
-    {
+    public class MainForm : Form{
         private ListBox listBox;
         private TextBox txtVeids;
         private TextBox txtModelis;
@@ -43,8 +39,7 @@ namespace PCComponentManager{
         private Button btnUpdate;
         private Button btnSave;
 
-        public MainForm()
-        {
+        public MainForm(){
             Text = "Personālā datora sastāvdaļas";
             Width = 520;
             Height = 360;
@@ -68,8 +63,7 @@ namespace PCComponentManager{
             btnUpdate.Click += BtnUpdate_Click;
             btnSave.Click += BtnSave_Click;
 
-            Controls.AddRange(new Control[]
-            {
+            Controls.AddRange(new Control[]{
                 listBox, lblVeids, lblModelis, lblCena,
                 txtVeids, txtModelis, txtCena,
                 btnAdd, btnUpdate, btnSave
@@ -81,8 +75,7 @@ namespace PCComponentManager{
             listBox.Items.Add(new PCComponent { Veids = "CPU", Modelis = "AMD Ryzen 7 5800X 3,8GHz", Cena = 657.80m });
         }
 
-        private void BtnAdd_Click(object sender, EventArgs e)
-        {
+        private void BtnAdd_Click(object sender, EventArgs e){
             if (!ValidateInput()) return;
 
             PCComponent component = new PCComponent
@@ -96,8 +89,7 @@ namespace PCComponentManager{
             ClearFields();
         }
 
-        private void BtnUpdate_Click(object sender, EventArgs e)
-        {
+        private void BtnUpdate_Click(object sender, EventArgs e){
             if (listBox.SelectedItem == null || !ValidateInput()) return;
 
             PCComponent component = (PCComponent)listBox.SelectedItem;
@@ -109,8 +101,7 @@ namespace PCComponentManager{
             listBox.Items[index] = component; // refresh
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
-        {
+        private void BtnSave_Click(object sender, EventArgs e){
             if (listBox.SelectedItem == null) return;
 
             SaveFileDialog dialog = new SaveFileDialog();
@@ -124,8 +115,7 @@ namespace PCComponentManager{
             }
         }
 
-        private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void ListBox_SelectedIndexChanged(object sender, EventArgs e){
             if (listBox.SelectedItem == null) return;
 
             PCComponent component = (PCComponent)listBox.SelectedItem;
@@ -134,8 +124,7 @@ namespace PCComponentManager{
             txtCena.Text = component.Cena.ToString("0.00");
         }
 
-        private bool ValidateInput()
-        {
+        private bool ValidateInput(){
             if (string.IsNullOrWhiteSpace(txtVeids.Text) ||
                 string.IsNullOrWhiteSpace(txtModelis.Text) ||
                 string.IsNullOrWhiteSpace(txtCena.Text))
